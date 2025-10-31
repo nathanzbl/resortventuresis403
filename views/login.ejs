@@ -3,8 +3,7 @@
 <!-- TEAM NOTE: We should make our code comment heavy especially for our first project
  so we are all on the same page! -->
 
- 
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -150,25 +149,38 @@
          * In a real application, this would send an AJAX request to your server.
          * @param {Event} event - The form submission event.
          */
-        function handleLogin(event) {
-            event.preventDefault(); // Stop the default form submission
+        async function handleLogin(event) {
+            event.preventDefault();
 
-            // Get form data (for demonstration purposes)
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const form = document.getElementById('loginForm');
+            const formData = new FormData(form);
 
-            if (username && password) {
-                // Here you would implement your fetch() request to the server /login endpoint
-                showMessage(`Attempting login for user: ${username}. (Credentials: ${password.length} characters)`);
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    body: new URLSearchParams(formData),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
 
-                // Simulate clearing the form after a successful/attempted submission
-                // document.getElementById('loginForm').reset();
-            } else {
-                showMessage("Please fill out both fields.");
+                const result = await response.json();
+
+                if (response.ok) {
+                    // SUCCESS: Use the redirectTo value sent by the server (now '/')
+                    showMessage(`Login successful! Redirecting...`);
+                    // Wait a moment for the user to read the message, then redirect
+                    setTimeout(() => {
+                        window.location.href = result.redirectTo; 
+                    }, 500); 
+                } else {
+                    // FAILURE: Display the error message from the server
+                    showMessage(`Login failed: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Login request failed:', error);
+                showMessage('An unexpected error occurred during login.');
             }
-
-            // In a real EJS app, this handler would likely post to the server and redirect.
-            // Example: fetch('/login', { method: 'POST', body: new FormData(event.target) }).then(...)
         }
 
         // Add a focus state to the card for better visual feedback

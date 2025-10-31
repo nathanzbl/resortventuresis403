@@ -21,14 +21,21 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // 5. Middleware for serving static files (CSS, JS, images)
+// Assuming you might have a 'public' folder for static assets later
 app.use(express.static(path.join(__dirname, 'public')));
 
 // --- Routes ---
 
 // 6. Landing Page (Root '/')
 app.get('/', (req, res) => {
-    // Renders the team's landing.ejs file
-    res.render('landing', { pageTitle: 'Welcome to RPV' });
+    // Renders the team's landing.ejs file (assuming it's named 'landing.ejs' in the views folder)
+    res.send(`
+        <body style="font-family: 'Inter', sans-serif; text-align: center; padding-top: 50px;">
+            <h1 style="color: #0d47a1;">Welcome to the Landing Page!</h1>
+            <p>You have successfully logged in.</p>
+            <p><a href="/login" style="color: #1e88e5;">Go to Login Page</a></p>
+        </body>
+    `);
 });
 
 // 7. Login Page (GET request to show the form)
@@ -43,27 +50,20 @@ app.post('/login', (req, res) => {
     const { username, password } = req.body;
     console.log(`Login attempt for user: ${username}`);
 
-    // !!! DUMMY AUTHENTICATION LOGIC !!!
-    // In the future, this will connect to a database (like Firestore) to verify credentials.
-    if (username === 'test' && password === 'password') {
-        // Success: Send a 200 OK status. The client-side JS will redirect on this status.
-        return res.status(200).json({ success: true, message: 'Login successful!' });
+    // !!! DUMMY AUTHENTICATION LOGIC FOR TESTING !!!
+    // The required credentials are: username="pass", password="word"
+    if (username === 'pass' && password === 'word') {
+        // Success: Send a 200 OK status, and tell the client to redirect to the Landing Page (/).
+        return res.status(200).json({ success: true, message: 'Login successful!', redirectTo: '/' });
     } else {
         // Failure: Send a 401 Unauthorized status and a friendly message.
-        return res.status(401).json({ success: false, message: 'Invalid username or password. Try "test" and "password".' });
+        return res.status(401).json({ success: false, message: 'Invalid username or password. Test credentials are "pass" and "word".' });
     }
 });
 
-// 9. Dashboard Route (Target for successful login redirect)
+// 9. Dashboard Route (Placeholder)
 app.get('/dashboard', (req, res) => {
-    // In a real application, this route would be protected (only for logged-in users).
-    res.send(`
-        <body style="font-family: 'Inter', sans-serif; text-align: center; padding-top: 50px;">
-            <h1 style="color: #0d47a1;">Welcome to the Shareholder Dashboard!</h1>
-            <p>You have successfully logged in.</p>
-            <p><a href="/login" style="color: #1e88e5;">Logout / Return to Login</a></p>
-        </body>
-    `);
+    res.send('Dashboard Placeholder');
 });
 
 // --- Server Start ---
@@ -71,6 +71,6 @@ app.get('/dashboard', (req, res) => {
 // 10. Start the server
 app.listen(PORT, () => {
     console.log(`\nServer is running at http://localhost:${PORT}`);
-    console.log('Test credentials: username="test", password="password"');
+    console.log('Test credentials are now: username="pass", password="word"');
     console.log('Press Ctrl+C to stop the server.');
 });
