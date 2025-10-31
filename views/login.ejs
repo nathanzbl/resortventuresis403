@@ -1,0 +1,184 @@
+
+
+<!-- TEAM NOTE: We should make our code comment heavy especially for our first project
+ so we are all on the same page! -->
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Property Ventures Login</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles and configuration */
+        :root {
+            --primary-color: #0d47a1; /* Dark Blue */
+            --accent-color: #1e88e5;  /* Lighter Blue */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .text-rpv-blue { color: var(--primary-color); }
+        .bg-rpv-blue { background-color: var(--primary-color); }
+        .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+
+        /* Custom message box styling (replaces alert/confirm) */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 90%;
+            min-width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Login Card -->
+    <div id="login-card" class="w-full max-w-md bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-gray-100 transition duration-300 hover:shadow-3xl">
+
+        <!-- Logo/Branding Section -->
+        <div class="text-center mb-8">
+            <svg class="mx-auto h-12 w-auto text-rpv-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5M9 21h6" />
+            </svg>
+            <h2 class="mt-4 text-3xl font-extrabold text-gray-900">
+                Sign in to RPV
+            </h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Resort Property Ventures
+            </p>
+        </div>
+
+        <!-- Login Form -->
+        <form class="space-y-6" id="loginForm" onsubmit="handleLogin(event)">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Username or Email</label>
+                <div class="mt-1">
+                    <input id="username" name="username" type="text" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rpv-accent focus:border-rpv-accent sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="mt-1">
+                    <input id="password" name="password" type="password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rpv-accent focus:border-rpv-accent sm:text-sm">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="text-sm">
+                    <a href="#" class="font-medium text-rpv-blue hover:text-rpv-accent" onclick="showMessage('Forgot Password functionality is not yet implemented.')">
+                        Forgot your password?
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rpv-blue hover:bg-rpv-accent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rpv-accent transition duration-150 ease-in-out">
+                    Log in
+                </button>
+            </div>
+        </form>
+
+        <!-- Registration Links (Required 11/8 feature) -->
+        <div class="mt-6">
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500">
+                        New User? Register here
+                    </span>
+                </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-2 gap-3">
+                <button type="button" class="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition duration-150 ease-in-out" onclick="showMessage('Owner Registration link clicked. This will navigate to /register/owner.')">
+                    Owner Registration
+                </button>
+                <button type="button" class="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition duration-150 ease-in-out" onclick="showMessage('Manager Registration link clicked. This will navigate to /register/manager.')">
+                    Manager Registration
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Message Box Element -->
+    <div id="messageBox" class="hidden message-box bg-blue-100 text-rpv-blue border border-blue-200" role="alert">
+        <p id="messageText" class="text-sm font-medium"></p>
+        <button onclick="hideMessage()" class="mt-2 text-xs font-semibold px-3 py-1 bg-rpv-blue text-white rounded hover:opacity-90">Close</button>
+    </div>
+
+    <script>
+        /**
+         * Custom function to display messages instead of using alert().
+         * @param {string} message - The message to display.
+         */
+        function showMessage(message) {
+            const box = document.getElementById('messageBox');
+            const text = document.getElementById('messageText');
+            text.textContent = message;
+            box.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the custom message box.
+         */
+        function hideMessage() {
+            document.getElementById('messageBox').classList.add('hidden');
+        }
+
+        /**
+         * Handles the login form submission.
+         * In a real application, this would send an AJAX request to your server.
+         * @param {Event} event - The form submission event.
+         */
+        function handleLogin(event) {
+            event.preventDefault(); // Stop the default form submission
+
+            // Get form data (for demonstration purposes)
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                // Here you would implement your fetch() request to the server /login endpoint
+                showMessage(`Attempting login for user: ${username}. (Credentials: ${password.length} characters)`);
+
+                // Simulate clearing the form after a successful/attempted submission
+                // document.getElementById('loginForm').reset();
+            } else {
+                showMessage("Please fill out both fields.");
+            }
+
+            // In a real EJS app, this handler would likely post to the server and redirect.
+            // Example: fetch('/login', { method: 'POST', body: new FormData(event.target) }).then(...)
+        }
+
+        // Add a focus state to the card for better visual feedback
+        document.getElementById('login-card').addEventListener('mouseenter', function() {
+            this.classList.add('shadow-3xl');
+        });
+        document.getElementById('login-card').addEventListener('mouseleave', function() {
+            this.classList.remove('shadow-3xl');
+        });
+
+    </script>
+</body>
+</html>
