@@ -1,34 +1,41 @@
-
-
-<!-- TEAM NOTE: We should make our code comment heavy especially for our first project
- so we are all on the same page! -->
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resort Property Ventures Login</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles and configuration */
         :root {
-            --primary-color: #0d47a1; /* Dark Blue */
-            --accent-color: #1e88e5;  /* Lighter Blue */
+            /* Color Variables from the new scheme */
+            --color-light-bg: #EAE3D3; /* Light background for body/form elements */
+            --color-dark-bg: #985E47;  /* Dark background for primary accent/headings */
+            --color-heading: #985E47;  /* Heading color (same as dark-bg) */
+            --color-button: #738F73;   /* Button and interactive element color */
+            --color-text-light: white; /* Text color for dark backgrounds */
+            --font-primary: 'Georgia', serif;
         }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Slate 50 */
+            font-family: var(--font-primary);
+            /* Body background uses the light background color */
+            background-color: var(--color-light-bg); 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 1rem;
         }
-        .text-rpv-blue { color: var(--primary-color); }
-        .bg-rpv-blue { background-color: var(--primary-color); }
-        .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+        /* Custom Tailwind-like classes based on new variables */
+        .text-rpv-heading { color: var(--color-heading); }
+        .bg-rpv-button { background-color: var(--color-button); }
+        .text-rpv-button { color: var(--color-button); }
+        .hover\:bg-rpv-dark:hover { background-color: var(--color-dark-bg); }
+        .focus\:ring-rpv-button:focus { 
+            --tw-ring-color: var(--color-button);
+        }
+        .border-rpv-button { border-color: var(--color-button); }
 
         /* Custom message box styling (replaces alert/confirm) */
         .message-box {
@@ -47,54 +54,50 @@
 </head>
 <body>
 
-    <!-- Main Login Card -->
-    <div id="login-card" class="w-full max-w-md bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-gray-100 transition duration-300 hover:shadow-3xl">
+    <div id="login-card" class="w-full max-w-md bg-white p-8 md:p-10 rounded-xl shadow-2xl border-2 border-gray-100 transition duration-300 hover:shadow-3xl">
 
-        <!-- Logo/Branding Section -->
         <div class="text-center mb-8">
-            <svg class="mx-auto h-12 w-auto text-rpv-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="mx-auto h-12 w-auto text-rpv-heading" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5M9 21h6" />
             </svg>
             <h2 class="mt-4 text-3xl font-extrabold text-gray-900">
                 Sign in to RPV
             </h2>
-            <p class="mt-2 text-sm text-gray-600">
+            <p class="mt-2 text-sm text-rpv-heading">
                 Resort Property Ventures
             </p>
         </div>
 
-        <!-- Login Form -->
         <form class="space-y-6" id="loginForm" onsubmit="handleLogin(event)">
             <div>
                 <label for="username" class="block text-sm font-medium text-gray-700">Username or Email</label>
                 <div class="mt-1">
-                    <input id="username" name="username" type="text" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rpv-accent focus:border-rpv-accent sm:text-sm">
+                    <input id="username" name="username" type="text" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rpv-button focus:border-rpv-button sm:text-sm">
                 </div>
             </div>
 
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                 <div class="mt-1">
-                    <input id="password" name="password" type="password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rpv-accent focus:border-rpv-accent sm:text-sm">
+                    <input id="password" name="password" type="password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-rpv-button focus:border-rpv-button sm:text-sm">
                 </div>
             </div>
 
             <div class="flex items-center justify-between">
                 <div class="text-sm">
-                    <a href="#" class="font-medium text-rpv-blue hover:text-rpv-accent" onclick="showMessage('Forgot Password functionality is not yet implemented.')">
+                    <a href="#" class="font-medium text-rpv-button hover:text-rpv-heading" onclick="showMessage('Forgot Password functionality is not yet implemented.')">
                         Forgot your password?
                     </a>
                 </div>
             </div>
 
             <div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rpv-blue hover:bg-rpv-accent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rpv-accent transition duration-150 ease-in-out">
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rpv-button hover:bg-rpv-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rpv-button transition duration-150 ease-in-out">
                     Log in
                 </button>
             </div>
         </form>
 
-        <!-- Registration Links (Required 11/8 feature) -->
         <div class="mt-6">
             <div class="relative">
                 <div class="absolute inset-0 flex items-center" aria-hidden="true">
@@ -119,10 +122,9 @@
 
     </div>
 
-    <!-- Message Box Element -->
-    <div id="messageBox" class="hidden message-box bg-blue-100 text-rpv-blue border border-blue-200" role="alert">
+    <div id="messageBox" class="hidden message-box bg-rpv-button text-white border-2 border-rpv-heading" role="alert">
         <p id="messageText" class="text-sm font-medium"></p>
-        <button onclick="hideMessage()" class="mt-2 text-xs font-semibold px-3 py-1 bg-rpv-blue text-white rounded hover:opacity-90">Close</button>
+        <button onclick="hideMessage()" class="mt-2 text-xs font-semibold px-3 py-1 bg-rpv-heading text-white rounded hover:opacity-90">Close</button>
     </div>
 
     <script>

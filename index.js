@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
     // The required credentials are: username="pass", password="word"
     if (username === 'pass' && password === 'word') {
         // Success: Send a 200 OK status, and tell the client to redirect to the Landing Page (/).
-        return res.status(200).json({ success: true, message: 'Login successful!', redirectTo: '/' });
+        return res.status(200).json({ success: true, message: 'Login successful!', redirectTo: '/landing' });
     } else {
         // Failure: Send a 401 Unauthorized status and a friendly message.
         return res.status(401).json({ success: false, message: 'Invalid username or password. Test credentials are "pass" and "word".' });
@@ -62,8 +62,8 @@ app.post('/login', (req, res) => {
 });
 
 // 9. Dashboard Route (Placeholder)
-app.get('/dashboard', (req, res) => {
-    res.send('Dashboard Placeholder');
+app.get('/landing', (req, res) => {
+    res.render('landing', { pageTitle: 'RPV Landing Page' });
 });
 
 // --- Server Start ---
