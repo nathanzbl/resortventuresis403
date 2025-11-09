@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Properties Ventures - Mexico Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom RPV Color Configuration */
+        :root {
+            --primary-color: #0d47a1; /* Dark Blue */
+            --accent-color: #1e88e5;  /* Lighter Blue */
+        }
+        /* Custom utility classes to use RPV colors */
+        .text-rpv-blue { color: var(--primary-color); }
+        .bg-rpv-blue { background-color: var(--primary-color); }
+        .border-rpv-accent { border-color: var(--accent-color); }
+        .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+        .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 from Login Page */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 left-0 w-full h-16 bg-rpv-blue text-white flex justify-between items-center px-4 md:px-10 z-50 shadow-lg">
+        <a href="/" class="text-white text-xl md:text-2xl font-bold tracking-tight">Resort Properties</a>
+        
+        <div class="flex items-center space-x-2 md:space-x-4">
+            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150">Home</a>
+            
+            <div class="relative group h-full flex items-center">
+                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
+                    Properties
+                </button>
+                <div class="absolute right-0 top-full w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
+                    <a href="/hawaii" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Hawaii</a>
+                    <a href="/mexico" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mexico</a>
+                    <a href="/mammoth" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mammoth</a>
+                    <a href="/tahoe" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Tahoe</a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
+                    Tools
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
+                    <a href="/schedules" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Schedules</a> 
+                    <a href="/directory" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Directory</a>
+                    <a href="/exchange" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Exchange Form</a>
+                    <a href="/info" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Change Your Info</a>
+                    <a href="/feedback" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Feedback</a> 
+                </div>
+            </div>
+            
+            <a href="/login" class="px-4 py-2 bg-white text-rpv-blue text-sm font-semibold rounded-md shadow-md hover:bg-gray-100 transition duration-150">
+                Login
+            </a>
+        </div>
+    </nav>
+
+    <div id="mainPage" class="pt-16">
+        
+        <div>
+            
+            <div>
+                
+                <div class="bg-gray-100 p-8 md:p-16 flex flex-col justify-center">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-rpv-blue leading-tight tracking-tight">
+                        Mexico Page
+                    </h1>
+                    <p class="text-xl text-gray-700 mb-6">All info about Mexico</p>
+                    <hr class="w-2/3 border-t border-gray-300 mb-8">
+                    
+                </div>
+            </div>
+        </div>
+    </div>      
+
+        <footer class="bg-gray-800 text-white text-center py-4 text-sm mt-0">
+            &copy; 2025 Resort Property Ventures. All rights reserved.
+        </footer>
+    </div>
+
+</body>
+</html>

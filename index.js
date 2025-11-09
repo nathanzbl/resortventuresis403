@@ -13,38 +13,31 @@ const PORT = 3000; // Define the port the server will listen on
 
 // --- Configuration & Middleware ---
 
-// 3. Middleware to parse URL-encoded bodies (essential for reading form data from POST requests)
+// Middleware to parse URL-encoded bodies (essential for reading form data from POST requests)
 app.use(express.urlencoded({ extended: true }));
 
-// 4. Set the view engine to EJS and specify the views directory
+// Set the view engine to EJS and specify the views directory
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// 5. Middleware for serving static files (CSS, JS, images)
+// Middleware for serving static files (CSS, JS, images)
 // Assuming you might have a 'public' folder for static assets later
 app.use(express.static(path.join(__dirname, 'public')));
 
 // --- Routes ---
 
-// 6. Landing Page (Root '/')
+// Landing Page (Root '/')
 app.get('/', (req, res) => {
-    // Renders the team's landing.ejs file (assuming it's named 'landing.ejs' in the views folder)
-    res.send(`
-        <body style="font-family: 'Inter', sans-serif; text-align: center; padding-top: 50px;">
-            <h1 style="color: #0d47a1;">Welcome to the Landing Page!</h1>
-            <p>You have successfully logged in.</p>
-            <p><a href="/login" style="color: #1e88e5;">Go to Login Page</a></p>
-        </body>
-    `);
+    res.render('landing')
 });
 
-// 7. Login Page (GET request to show the form)
+// Login Page (GET request to show the form)
 app.get('/login', (req, res) => {
     // Renders the login.ejs file
     res.render('login', { pageTitle: 'RPV Login' });
 });
 
-// 8. Login Submission (POST request to process the form)
+// Login Submission (POST request to process the form)
 app.post('/login', (req, res) => {
     // Extract credentials from the request body
     const { username, password } = req.body;
@@ -61,14 +54,37 @@ app.post('/login', (req, res) => {
     }
 });
 
-// 9. Dashboard Route (Placeholder)
+app.get('/hawaii', (req, res) => {
+    // Renders the hawaii.ejs file
+    res.render('hawaii');
+});
+
+
+app.get('/mexico', (req, res) => {
+    // Renders the mexico.ejs file
+    res.render('mexico');
+});
+
+
+app.get('/mammoth', (req, res) => {
+    // Renders the mammoth.ejs file
+    res.render('mammoth');
+});
+
+
+app.get('/tahoe', (req, res) => {
+    // Renders the tahoe.ejs file
+    res.render('tahoe');
+});
+
+// Dashboard Route (Placeholder)
 app.get('/dashboard', (req, res) => {
     res.send('Dashboard Placeholder');
 });
 
 // --- Server Start ---
 
-// 10. Start the server
+// Start the server
 app.listen(PORT, () => {
     console.log(`\nServer is running at http://localhost:${PORT}`);
     console.log('Test credentials are now: username="pass", password="word"');
