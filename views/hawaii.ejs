@@ -5,183 +5,458 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resort Properties Ventures - Hawaii Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Custom RPV Color Configuration */
+        /* Custom RPV Color Configuration (Professional & Clean) */
         :root {
-            --primary-color: #0d47a1; /* Dark Blue */
-            --accent-color: #1e88e5;  /* Lighter Blue */
+            --primary-color: #003262; /* Deep Navy Blue */
+            --accent-color: #FF5A5F;  /* Coral/Red Accent */
+            --light-bg: white;      /* Very Light Gray for Section background */
         }
         /* Custom utility classes to use RPV colors */
         .text-rpv-blue { color: var(--primary-color); }
         .bg-rpv-blue { background-color: var(--primary-color); }
+        .bg-rpv-accent { background-color: var(--accent-color); }
         .border-rpv-accent { border-color: var(--accent-color); }
         .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
         .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Slate 50 from Login Page */
+            background-color: var(--light-bg); 
         }
+        /* Style for the photo placeholder */
+        .manager-photo {
+            width: 150px;
+            height: 150px;
+            background-color: #ccc;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+            color: #555;
+        }
+
+        .manager-photo img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        * {box-sizing:border-box}
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 400px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Hide the images by default */
+        .mySlides {
+            display: none;
+            position: relative; /* Needed for absolute positioning of text/caption */
+        }
+
+        /* Image Sizing and Scaling Fix */
+        .mySlides img {
+            width: 100%;
+            height: 300px; /* **FIXED HEIGHT FOR LOW-RES IMAGES** */
+            object-fit: cover; /* Ensures image fills the area without stretching */
+            display: block;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 50, 98, 0.6); /* Semi-transparent RPV Blue */
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a darker background */
+        .prev:hover, .next:hover {
+            background-color: var(--primary-color); /* Deep Navy Blue on hover */
+        }
+
+        /* Caption text - NOW with better contrast and padding */
+        .text {
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            width: 100%;
+            text-align: left;
+            
+            font-weight: 600;
+            /* These properties are removed/changed to put it back in the normal flow */
+            position: static; 
+            bottom: auto; 
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: white;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 12px; /* Slightly smaller dots */
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: white; 
+        }
+
+        /* Fading animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .image-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; /* Make text color readable */
+            z-index: 1;
+            text-align: center;
+            /* Add any other styles like font-size, font-family, etc. */
+         }
+
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 left-0 w-full h-16 bg-rpv-blue text-white flex justify-between items-center px-4 md:px-10 z-50 shadow-lg">
-        <a href="/" class="text-white text-xl md:text-2xl font-bold tracking-tight">Resort Properties</a>
+    <nav class="fixed top-0 left-0 w-full h-16 bg-white text-rpv-blue flex justify-between items-center px-4 md:px-10 z-50 shadow-md border-b border-gray-100">
+        <a href="/" class="text-rpv-blue text-xl md:text-2xl font-extrabold tracking-tight">Resort Properties</a>
         
-        <div class="flex items-center space-x-2 md:space-x-4">
-            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150">Home</a>
+        <div class="flex items-center space-x-2 md:space-x-6">
+            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 font-semibold">Home</a>
 
             <div class="relative group h-full flex items-center">
-                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
+                <button class="text-rpv-blue text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 focus:outline-none font-semibold">
                     Properties
                 </button>
-                <div class="absolute right-0 top-full w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
-                    <a href="/hawaii" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Hawaii</a>
-                    <a href="/mexico" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mexico</a>
-                    <a href="/mammoth" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mammoth</a>
-                    <a href="/tahoe" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Tahoe</a>
+                <div class="absolute right-0 top-full w-48 bg-white shadow-xl rounded-md hidden group-hover:block z-50 py-1 border border-gray-100">
+                    <a href="/hawaii" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Hawaii</a>
+                    <a href="/mexico" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Mexico</a>
+                    <a href="/mammoth" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Mammoth</a>
+                    <a href="/tahoe" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Tahoe</a>
                 </div>
             </div>
 
             <div class="relative group">
-                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
+                <button class="text-rpv-blue text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 focus:outline-none font-semibold">
                     Tools
                 </button>
-                <div class="absolute right-0 mt-2 w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
-                    <a href="/schedules" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Schedules</a> 
-                    <a href="/directory" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Directory</a>
-                    <a href="/exchange" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Exchange Form</a>
-                    <a href="/info" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Change Your Info</a>
-                    <a href="/feedback" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Feedback</a> 
+                <div class="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-md hidden group-hover:block z-50 py-1 border border-gray-100">
+                    <a href="/schedules" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Schedules</a> 
+                    <a href="/directory" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Directory</a>
+                    <a href="/exchange" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Exchange Form</a>
+                    <a href="/info" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Change Your Info</a>
+                    <a href="/feedback" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Feedback</a> 
                 </div>
             </div>
             
-            <a href="/login" class="px-4 py-2 bg-white text-rpv-blue text-sm font-semibold rounded-md shadow-md hover:bg-gray-100 transition duration-150">
+            <a href="/login" class="px-4 py-2 bg-rpv-accent text-white text-sm font-bold rounded-lg shadow-md hover:opacity-90 transition duration-150">
                 Login
             </a>
         </div>
     </nav>
-
-    <div id="mainPage" class="pt-16">                
-                <div class="bg-gray-100 p-8 md:p-16 flex flex-col justify-center">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-rpv-blue leading-tight tracking-tight">
-                        Hawaii Page
-                    </h1>
-                    <p class="text-xl text-gray-700 mb-6">All info about Hawaii</p>
-                    <hr class="w-2/3 border-t border-gray-300 mb-8">
-                    
+    
+    <div class="image-container">
+        <img src="/images/hawaii_img/hawaii.jpg" alt="Photo of Hawaii landscape">
+        <div class="overlay-text">
+            <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight">
+                Aloha, Hawaii!
+            </h1>
+            <p class="text-xl mt-2">Essential information for your Wailea Ekolu stay.</p>
+        </div>
+      </div>
+    
+    
+    
+    
+    <div id="mainPage">
+        
+        <div class="bg-white p-20 my-6 flex items-start space-x-20">
+            
+            <div class="flex flex-col items-center">
+                <div class="manager-photo">
+                    <img src="/images/hawaii_img/blatter-photo.jpg" alt="Photo of Eric Blatter">
                 </div>
-            <div class="bg-blue-100 p-8 justify-center">
-                <h1 class="text-2xl">
-                    Welcome to Paradise!
-                </h1>
-                <p> 
-                    Wailea Ekolu is the perfect place to relax and enjoy the breezes and beautiful ocean view. We hope each vacation is one to remember. Enjoy!
-                    
-                    Eric Blatter
+                <div class="text-center mt-3 text-sm">
+                    <span class="font-semibold text-rpv-blue">Eric Blatter</span> <br>
                     Property Manager
-                    925-984-3626 (c)
-                    eric.blatter@kraftheinz.com</p>
+                </div>
             </div>
 
             <div>
-                <h1 class="text-2xl p-8 justify-center">
-                    Tour
-                </h1>
+                <h2 class="text-2xl font-bold text-rpv-blue mb-4">
+                    A Warm Welcome to Wailea
+                </h2>
+                <blockquote class="text-lg text-gray-700 pl-4 mb-4"> 
+                    Wailea Ekolu offers the perfect setting to relax and enjoy the ocean views and gentle breezes. We trust your vacation will be a memorable experience.
+                </blockquote>
+                <div class="text-base font-medium text-gray-800 pt-3">
+                    <span class="font-semibold text-rpv-blue">Contact:</span> Phone: 925-984-3626 | 
+                    Email: <a href="mailto:eric.blatter@kraftheinz.com" class="text-rpv-accent hover:text-rpv-blue transition duration-150">eric.blatter@kraftheinz.com</a>
+                </div>
             </div>
+        </div>
 
-            <div class="p-8">
-                <h1 class="text-2xl justify-center">
-                    Rules and Reminders
-                </h1>
-                <p class="">Aloha!
+        <div class="py-8 bg-rpv-blue mb-8 p-20">
+            <h2 class="text-4xl pt-20 font-bold text-white text-center pb-4 mb-6">
+                Property Tour and Visual Gallery
+            </h2>
+            <p class="text-white p-8 mb-10">The condo in Maui, Hawaii is located in the southern portion of the island in Wailea. The unit is located upstairs and has a 180 degree ocean view.
+                It has two bedrooms and two baths and sleeps six. Beautiful beaches are approximately one quarter mile away.</p>
+            
+            <div class="slideshow-container">
 
-                    We welcome all owners and guests and know that you will treat our condo with the same respect and
-                    care you do your home. Enjoy your stay.
-                    
-                    WHEN YOU ARRIVE:
-                    
-                    Check in time is 4 p.m Monday. You can arrive earlier, but please don't bother the cleaning service if they are still there.
-                    Remember the lock box code. If you keep the key in the box, you will never be locked out! It is also the combo door code now.
-                    Call the cleaning service and let them know you are staying the week. To keep costs lower, we only want the cleaning service to come if the condo is used. If you are staying two consecutive weeks, you can choose to have the condo cleaned or not half way through your stay.
-                    If you DO NOT let me know you are not using your week and the cleaning crew comes, it is a $200 assessment to you.
-                    WHILE YOU ARE HERE:
-                    
-                    If you need laundry or dishwasher soap, buy it.
-                    Please don't use spray sunscreen inside the condo. It is difficult to clean off the carpet and floors.
-                    Don't go to the Resident Manager's office expecting services that are normally provided at resort offices. They manage the property for the Association and have no responsibility for assisting you in finding your way around Ekolu, Wailea or Maui.
-                    Don't seek lower owner rates at Wailea's golf and tennis facilities. We have many partners and are not eligible to extend lower user fees to our partnership.
-                    If locked out, do not bother the Resident Manager, call a locksmith.
-                    When sitting on the upholstered furniture in the living room after applying sunscreen or just after returning from the beach, please put a clean, dry towel over the furniture to protect it.
-                    Treat the condo as you would your own home. Fix any small items which are broken, clean small messes as needed, treat the fixtures, furniture and appliances with care.
-                    Be respectful of neighbors by not playing the television too loudly, etc.
-                    BEFORE YOU LEAVE:
-                    
-                    Check out is 11 a.m. Monday. It is NOT engraved in stone, but the cleaning service needs to clean before the next guests.
-                    To save all of us money, put the sheets and towels on to wash and dry for the maid service. Starting the laundry as soon as you rise in the morning allows for several loads.
-                    Don’t remake the beds, just leave the clean sheets folded on the beds and you can leave things in the dryer if you have to leave before they are done.
-                    Clean and put all dishes and pots and pans away. Straighten up any furniture that you’ve moved. You don’t have to clean the bathrooms or vacuum.
-                    Lock up all doors and put the spare key back in lock box if you have removed it and bring our set of keys home with you. You can leave windows half open but lock the sliding doors.
-                    BEFORE YOU ARRIVE HOME:
-                    
-                    Please let Eric Blatter (925-984-3626 (c) eric.blatter@kraftheinz.com) know if there were problems with the condo, or maintenance which needs to be done.
-                    Have a wonderful vacation!
-                    
-                    Abridged Rules and Regulations
-                    Wailea Ekolu Villiage
-                    Aloha and welcome to Wailea Ekolu Village.  We are a privately owned residential-resort condominium Association.  Compliancewith the Rules and Regulations is a requirement for all owners and guests.  The office is here to handle owner’s personal needs, as well as the maintenance of the property. If you are a renter, and have specific requests or personal needs, please contact the unit owner or the owner’s rental agency directly. Your cooperation in observing these Rules will insure a pleasant environment for you and the other guests and residents.  Please treat your Apartment and the Common Areas with the same regard that you show your own home and neighborhood.
-                    
-                    SECURITY: Ekolu Security can be reached by phone at 281-4315.
-                    
-                    Wailea Patrol can be reached at 874-3922 (twenty-four hours a day). 911 service is also available.
-                    
-                    POOLS: Swimming pool hours are from 8:00 a.m. to 9:00 p.m. daily, unless closed for maintenance.  The pools are forthe specific use of residents and their guests only!  No Lifeguard is on duty—so the use of the pool is at yourown risk. No glassware of any type is allowed in the pool area—for safety reasons. Parents and guardians are responsible for the safety of children using the pools.  Children in diapers or not toilet trained must use appropriate “swim suit diapers”. Small children may use small tubes, water wings or similar safety devices for safety purposes if accompanied by an adult. No play equipment is allowed in the pool area, such as rafts, air mattresses, fins, balls, Frisbees, etc. Horseplay or games like Marco Polo are not allowed.  No disruptive noise is permitted in the pool area.  Please respect your neighbors.
-                    
-                    LANAI: No towels, bathing suits, clothing, etc. are to be hung on lanai or entry railings. Dust, rubbish or water shall not be swept or thrown from upper level lanais or front entryways. Barbecuing of any kind, including electric grills, is strictly prohibited on the lanai.
-                    
-                    PARKING: Each apartment is entitled to one parking stall only.  Under no circumstances shall there be more than two (2) vehicles per unit on the property at any one time.  Written approval must be obtained prior to parking a second vehicle on the property.  Only passenger vehicles, vans and SUVs are allowed.  Parking of commercial vehicles in Ekolu Village is not permitted.
-                    
-                    QUIETNESS: Peace and quiet shall be maintained by all residents and guests between the hours of 10:00 p.m. and 8:00 a.m. every day.  Violations of this rule are reported to the unit owner. Please avoid excessive or disruptive noise of any type at any time.  Note:  Ekolu personnel may perform quiet tasks beginning at 7:00 a.m.
-                    
-                    SPORTS: Sports, such as football, baseball, basketball, volleyball, or golf shall not be played on the property.
-                    
-                    WALKWAYS: Bicycles, motor bikes, motorcycles, etc. are not allowed on any walkways. Skateboards, roller-blades, scooters and related activities are not permitted on the property at any time.
-                    
-                    BARBECUES: There are four outdoor charcoal-type barbecue areas on the property.  We suggest that you use an “instant light” type of briquette when using these grills. Barbecuing on the lanai, even with an electric grill, is no longer permitted.
-                    
-                    YOUR SAFETY: The golf course adjacent to Wailea Ekolu is the private property of Wailea Golf Resort, Inc. and is not a part of Ekolu’s grounds.  Walking on the golf courses or the golf cart paths is hazardous and is not permitted.
-                    
-                    SHOES: Shoes with metal studs or spikes (such as golf shoes) may not be worn on the property.
-                    
-                    ACTIVITIES: Information on Island activities and other vacation data is available in the Pavilion (adjacent to the office).
-                    
-                    PETS: Contact the Homeowner’s Association office for guidelines and rules pertaining to pets.  All pets must be registered with the office.  No pets are allowed in the pool areas.
-                    
-                    OFFICE:The Homeowner’s Association office phone number is 879-2222.  Office hours are 8:00 a.m. to 4:00 p.m. Monday through Friday (except Holidays). Reports of violations of these Rules should be directed to that office.  The Homeowner’s Association office does not handle rentals or problems concerned with rentals.
-                    
-                    We wish you a pleasant and memorable stay in Wailea Ekolu Village and hope you will return.  We are proud of our Village and ask you to respect our property as you would your own.
-                    
-                    Mahalo Nui Loa
-                    Board of Directors for AOAO Wailea Ekolu
-                    
-                     </p>
+                <div class="mySlides fade">
+                    <div class="numbertext">1 / 9</div>
+                    <img src="/images/hawaii_img/living_room1.jpg" alt="Stylish Living Room">
+                    <div class="text">
+                        <p>The living room has a vaulted ceiling and ocean view facing west. The sofa has a pull-out double bed. The dining table seats four.</p>
+                    </div>
+                </div>
+            
+                <div class="mySlides fade">
+                    <div class="numbertext">2 / 9</div>
+                    <img src="/images/hawaii_img/kitchen1.jpg" alt="Modern Kitchen">
+                    <div class="text">
+                        <p>The kitchen has granite countertops, stove/oven, refrigerator, dishwasher, coffee maker, toaster and all cooking utensils. The sink has a beautiful ocean view.</p>
+                    </div>
+                </div>
+            
+                <div class="mySlides fade">
+                    <div class="numbertext">3 / 9</div>
+                    <img src="/images/hawaii_img/master_bedroom1.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The master bedroom has a king bed, dressing/make-up area and bath with tub and shower. It includes a television, dresser, writing desk, alarm clock, ocean view with small lanai, air-conditioner, ceiling fan, and a stacked-unit laundry closet.</p>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">4 / 9</div>
+                    <img src="/images/hawaii_img/master_bedroom2.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The master bedroom has a king bed, dressing/make-up area and bath with tub and shower. It includes a television, dresser, writing desk, alarm clock, ocean view with small lanai, air-conditioner, ceiling fan, and a stacked-unit laundry closet.</p>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">5 / 9</div>
+                    <img src="/images/hawaii_img/master_bedroom3.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The master bedroom has a king bed, dressing/make-up area and bath with tub and shower. It includes a television, dresser, writing desk, alarm clock, ocean view with small lanai, air-conditioner, ceiling fan, and a stacked-unit laundry closet.</p>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">6 / 9</div>
+                    <img src="/images/hawaii_img/second_bedroom1.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The second bedroom has a twin bed and a double bed, dresser and television. The bedroom area contains a separate bathroom.</p>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">7 / 9</div>
+                    <img src="/images/hawaii_img/second_bedroom2.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The second bedroom has a twin bed and a double bed, dresser and television. The bedroom area contains a separate bathroom.</p>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">8 / 9</div>
+                    <img src="/images/hawaii_img/view1.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The beautiful ocean view is breathtaking. Two islands besides Maui -- Kahoolawe and Molokini -- can be seen from the living room, kitchen and master bedroom.</p>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">9 / 9</div>
+                    <img src="/images/hawaii_img/view2.jpg" alt="Ocean View from Balcony">
+                    <div class="text">
+                        <p>The beautiful ocean view is breathtaking. Two islands besides Maui -- Kahoolawe and Molokini -- can be seen from the living room, kitchen and master bedroom.</p>
+                    </div>
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
+            
+            <div style="text-align:center; padding-top: 15px;">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+                <span class="dot" onclick="currentSlide(9)"></span>
 
-            <div>
-                <h1 class="text-2xl p-8 justify-center">
-                    Email Partners
-                </h1>
             </div>
-    </div>
+        
+        </div>
 
+        <div class="py-8 bg-white rounded-lg shadow-lg mb-8 p-6">
+            <h2 class="text-3xl font-bold text-gray-800 pb-4 border-b border-gray-200 mb-6">
+                Guest Rules and Property Reminders
+            </h2>
+            
+            <div class="text-gray-700">
+                <p class="text-lg mb-6">
+                    We extend a warm welcome to all owners and guests and kindly request that you treat our condominium with the same respect and care you would your own residence.
+                </p>
+
+                <h3 class="text-xl font-bold text-rpv-blue mt-6 mb-3 border-b pb-1">Check-In Procedure:</h3>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>Check-in time is 4:00 p.m. on Monday. Please respect the cleaning staff's schedule if they are still on site prior to this time.</li>
+                    <li>The lock box code serves as the combination door code. Utilizing the lock box prevents accidental lockouts.</li>
+                    <li>Please contact the cleaning service directly to confirm your arrival, as cleaning is scheduled only when the condo is in use.</li>
+                    <li>Failure to notify us of non-use of your reserved week, which results in a cleaning service visit, will incur a $200 assessment.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-rpv-blue mt-6 mb-3 border-b pb-1">During Your Stay:</h3>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>Guests are responsible for purchasing necessary supplies such as laundry and dishwasher detergent.</li>
+                    <li>Aerosol sunscreen products are strictly prohibited inside the condo due to difficult residue cleanup.</li>
+                    <li>The Resident Manager is for Association management only and is not equipped to provide concierge services (directions, local information, etc.).</li>
+                    <li>Lower owner rates for Wailea's golf and tennis facilities are not applicable to our partnership.</li>
+                    <li>In the event of a lockout, please contact a professional locksmith. Do not disturb the Resident Manager.</li>
+                    <li>Please cover upholstered furniture with a clean, dry towel when sitting after applying sunscreen or returning from the beach.</li>
+                    <li>Please maintain neighborly quiet hours and respect the fixtures, furniture, and appliances as if they were your own.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-rpv-blue mt-6 mb-3 border-b pb-1">Check-Out Procedure:</h3>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>Check-out time is 11:00 a.m. on Monday.</li>
+                    <li>To assist the cleaning crew, please start the washing and drying of all sheets and towels.</li>
+                    <li>Do not remake the beds; leave the clean sheets folded on the beds. Laundry items may be left in the dryer if not fully finished upon departure.</li>
+                    <li>All dishes, pots, and pans must be cleaned and put away. Return any moved furniture to its original position.</li>
+                    <li>Secure all doors and return the spare key to the lock box. Bring your set of keys home with you. Lock the sliding doors, though windows may be left partially open.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-rpv-blue mt-6 mb-3 border-b pb-1">Post-Departure Notification:</h3>
+                <p class="mb-4">
+                    Kindly notify Eric Blatter (contact information above) upon your return if any maintenance issues or problems were observed during your stay.
+                </p>
+
+                <h3 class="text-2xl font-bold text-gray-800 mt-8 mb-4 border-b pb-2">Wailea Ekolu Villiage Abridged Regulations</h3>
+
+                <ul class="list-disc ml-6 space-y-3">
+                    <li>SECURITY: Ekolu Security (281-4315). Wailea Patrol (874-3922).</li>
+                    <li>POOLS: Hours: 8:00 a.m. to 9:00 p.m. daily. No lifeguard. No glassware permitted. Inflatable water toys or balls are prohibited.</li>
+                    <li>LANAI: Towels/clothing are not permitted on railings. Barbecuing is prohibited on all lanais.</li>
+                    <li>PARKING: Limited to one parking stall per unit. A maximum of two vehicles is permitted with prior written approval.</li>
+                    <li>QUIET HOURS: Maintained between 10:00 p.m. and 8:00 a.m.</li>
+                    <li>BARBECUES: Four outdoor charcoal-type barbecue areas are available for communal use.</li>
+                    <li>GOLF COURSE: Guests are strictly prohibited from walking on the adjacent golf course or cart paths.</li>
+                    <li>PETS: Rules and registration are managed by the Homeowner’s Association office. Pets are not allowed in pool areas.</li>
+                </ul>
+
+                <p class="text-center text-lg font-bold mt-8 text-rpv-accent">Mahalo Nui Loa</p>
+                <p class="text-center text-sm">Board of Directors for AOAO Wailea Ekolu</p>
+            </div>
+        </div>
+
+    </div> 
     
-    
-
-        <footer class="bg-gray-800 text-white text-center py-4 text-sm mt-0">
+    <footer class="bg-rpv-blue text-white text-center py-4 text-sm mt-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             &copy; 2025 Resort Property Ventures. All rights reserved.
-        </footer>
-    </div>
+        </div>
+    </footer>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        
+        // Next/previous controls
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+        
+        // Thumbnail image controls
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = slides.length}
+          
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          
+          slides[slideIndex-1].style.display = "block";
+          dots[slideIndex-1].className += " active";
+        }
+    </script>
+
 
 </body>
 </html>
