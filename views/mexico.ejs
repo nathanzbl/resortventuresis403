@@ -5,86 +5,403 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resort Properties Ventures - Mexico Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Custom RPV Color Configuration */
+        /* Custom RPV Color Configuration (Professional & Clean) */
         :root {
-            --primary-color: #0d47a1; /* Dark Blue */
-            --accent-color: #1e88e5;  /* Lighter Blue */
+            --primary-color: #003262; /* Deep Navy Blue */
+            --accent-color: #FF5A5F;  /* Coral/Red Accent */
+            --light-bg: white;      /* Very Light Gray for Section background */
         }
         /* Custom utility classes to use RPV colors */
         .text-rpv-blue { color: var(--primary-color); }
         .bg-rpv-blue { background-color: var(--primary-color); }
+        .bg-rpv-accent { background-color: var(--accent-color); }
         .border-rpv-accent { border-color: var(--accent-color); }
         .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
         .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Slate 50 from Login Page */
+            background-color: var(--light-bg); 
         }
+        /* Style for the photo placeholder */
+        .manager-photo {
+            width: 150px;
+            height: 150px;
+            background-color: #ccc;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+            color: #555;
+        }
+
+        .manager-photo img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        * {box-sizing:border-box}
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 400px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Hide the images by default */
+        .mySlides {
+            display: none;
+            position: relative; /* Needed for absolute positioning of text/caption */
+        }
+
+        /* Image Sizing and Scaling Fix */
+        .mySlides img {
+            width: 100%;
+            height: 300px; /* **FIXED HEIGHT FOR LOW-RES IMAGES** */
+            object-fit: cover; /* Ensures image fills the area without stretching */
+            display: block;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 50, 98, 0.6); /* Semi-transparent RPV Blue */
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a darker background */
+        .prev:hover, .next:hover {
+            background-color: var(--primary-color); /* Deep Navy Blue on hover */
+        }
+
+        /* Caption text - NOW with better contrast and padding */
+        .text {
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            width: 100%;
+            text-align: left;
+            
+            font-weight: 600;
+            /* These properties are removed/changed to put it back in the normal flow */
+            position: static; 
+            bottom: auto; 
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: white;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 12px; /* Slightly smaller dots */
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: white; 
+        }
+
+        /* Fading animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: 700px;
+            object-fit: cover;
+
+
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; /* Make text color readable */
+            z-index: 1;
+            text-align: center;
+            /* Add any other styles like font-size, font-family, etc. */
+         }
+
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 left-0 w-full h-16 bg-rpv-blue text-white flex justify-between items-center px-4 md:px-10 z-50 shadow-lg">
-        <a href="/" class="text-white text-xl md:text-2xl font-bold tracking-tight">Resort Properties</a>
+    <nav class="fixed top-0 left-0 w-full h-16 bg-white text-rpv-blue flex justify-between items-center px-4 md:px-10 z-50 shadow-md border-b border-gray-100">
+        <a href="/" class="text-rpv-blue text-xl md:text-2xl font-extrabold tracking-tight">Resort Properties</a>
         
-        <div class="flex items-center space-x-2 md:space-x-4">
-            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150">Home</a>
-            
+        <div class="flex items-center space-x-2 md:space-x-6">
+            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 font-semibold">Home</a>
+
             <div class="relative group h-full flex items-center">
-                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
+                <button class="text-rpv-blue text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 focus:outline-none font-semibold">
                     Properties
                 </button>
-                <div class="absolute right-0 top-full w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
-                    <a href="/hawaii" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Hawaii</a>
-                    <a href="/mexico" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mexico</a>
-                    <a href="/mammoth" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mammoth</a>
-                    <a href="/tahoe" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Tahoe</a>
+                <div class="absolute right-0 top-full w-48 bg-white shadow-xl rounded-md hidden group-hover:block z-50 py-1 border border-gray-100">
+                    <a href="/hawaii" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Hawaii</a>
+                    <a href="/mexico" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Mexico</a>
+                    <a href="/mammoth" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Mammoth</a>
+                    <a href="/tahoe" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Tahoe</a>
                 </div>
             </div>
 
             <div class="relative group">
-                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
+                <button class="text-rpv-blue text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 focus:outline-none font-semibold">
                     Tools
                 </button>
-                <div class="absolute right-0 mt-2 w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
-                    <a href="/schedules" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Schedules</a> 
-                    <a href="/directory" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Directory</a>
-                    <a href="/exchange" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Exchange Form</a>
-                    <a href="/info" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Change Your Info</a>
-                    <a href="/feedback" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Feedback</a> 
+                <div class="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-md hidden group-hover:block z-50 py-1 border border-gray-100">
+                    <a href="/schedules" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Schedules</a> 
+                    <a href="/directory" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Directory</a>
+                    <a href="/exchange" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Exchange Form</a>
+                    <a href="/info" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Change Your Info</a>
+                    <a href="/feedback" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Feedback</a> 
                 </div>
             </div>
             
-            <a href="/login" class="px-4 py-2 bg-white text-rpv-blue text-sm font-semibold rounded-md shadow-md hover:bg-gray-100 transition duration-150">
+            <a href="/login" class="px-4 py-2 bg-rpv-accent text-white text-sm font-bold rounded-lg shadow-md hover:opacity-90 transition duration-150">
                 Login
             </a>
         </div>
     </nav>
-
-    <div id="mainPage" class="pt-16">
+    
+    <div class="image-container">
+        <img src="/images/mexico_img/los-cabos.jpg" alt="Photo of Hawaii landscape">
+        <div class="overlay-text">
+            <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight">
+                Welcome to Mexico!
+            </h1>
+            <p class="text-xl mt-2">Essential information for your stay.</p>
+        </div>
+      </div>
+    
+    
+    
+    
+    <div id="mainPage">
         
-        <div>
+        <div class="bg-white p-20 my-6 flex items-start space-x-20">
             
+            <div class="flex flex-col items-center">
+                <div class="manager-photo">
+                    <img src="/images/mexico_img/russ_silvia.jpg" alt="Photo of Russ Haycock">
+                </div>
+                <div class="text-center mt-3 text-sm">
+                    <span class="font-semibold text-rpv-blue">Russ Haycock</span> <br>
+                    Property Manager
+                </div>
+            </div>
+
             <div>
-                
-                <div class="bg-gray-100 p-8 md:p-16 flex flex-col justify-center">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-rpv-blue leading-tight tracking-tight">
-                        Mexico Page
-                    </h1>
-                    <p class="text-xl text-gray-700 mb-6">All info about Mexico</p>
-                    <hr class="w-2/3 border-t border-gray-300 mb-8">
-                    
+                <h2 class="text-2xl font-bold text-rpv-blue mb-4">
+                    Welcome to Paradise
+                </h2>
+                <blockquote class="text-lg text-gray-700 pl-4 mb-4"> 
+                    Enjoy the sunsets, the warm sun and the even warmer Mexican people, so willing to make your stay in Nuevo Vallarta a very special one. The beauty of the beach, the crashing of the waves, the fabulous thunder and lighting shows and the the pelicans diving for lunch or dinner will tug at your heart to return many times to this special place.
+                </blockquote>
+                <div class="text-base font-medium text-gray-800 pt-3">
+                    <span class="font-semibold text-rpv-blue">Contact:</span> Phone: 510-697-7048 | 
+                    Email: <a href="mailto:rhaycock@hotmail.com" class="text-rpv-accent hover:text-rpv-blue transition duration-150">rhaycock@hotmail.com</a>
                 </div>
             </div>
         </div>
-    </div>      
 
-        <footer class="bg-gray-800 text-white text-center py-4 text-sm mt-0">
+        <div class="pt-6 pb-20 bg-rpv-blue mx-20 mb-8 px-20">
+            <h2 class="text-4xl pt-10 font-bold text-white text-center pb-4">
+                Property Tour and Visual Gallery
+            </h2>
+            <p class="text-white p-8 mb-10 pb-10 text-center" style="max-width: 750px; margin: 0 auto">The condo in Maui, Hawaii is located in the southern portion of the island in Wailea. The unit is located upstairs and has a 180 degree ocean view.
+                It has two bedrooms and two baths and sleeps six. Beautiful beaches are approximately one quarter mile away.</p>
+            
+            <div class="slideshow-container">
+
+                <div class="mySlides fade">
+                    <div class="numbertext">1 / 13</div>
+                    <img src="/images/mexico_img/6364.jpg" alt="Front of the house">
+                </div>
+            
+                <div class="mySlides fade">
+                    <div class="numbertext">2 / 13</div>
+                    <img src="/images/mexico_img/image1.png" alt="View of the beach from the porch">
+                </div>
+            
+                <div class="mySlides fade">
+                    <div class="numbertext">3 / 13</div>
+                    <img src="/images/mexico_img/image2.png" alt="View of hammock outside and backside of the house">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">4 / 13</div>
+                    <img src="/images/mexico_img/image3.png" alt="View of the backyard and pool">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">5 / 13</div>
+                    <img src="/images/mexico_img/image4.png" alt="View of the living room">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">6 / 13</div>
+                    <img src="/images/mexico_img/image5.png" alt="View of home interior and table">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">7 / 13</div>
+                    <img src="/images/mexico_img/image6.png" alt="Pool Table View">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">8 / 13</div>
+                    <img src="/images/mexico_img/image7.png" alt="View of bedroom">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">9 / 13</div>
+                    <img src="/images/mexico_img/image8.png" alt="View of bedroom">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">10 / 13</div>
+                    <img src="/images/mexico_img/image9.png" alt="View of bedroom">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">11 / 13</div>
+                    <img src="/images/mexico_img/image10.png" alt="View of bedroom">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">12 / 13</div>
+                    <img src="/images/mexico_img/image11.png" alt="View of bedroom">
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">13 / 13</div>
+                    <img src="/public/images/mexico_img/download.jpg" alt="View of bedroom">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            
+            <div style="text-align:center; padding-top: 15px;">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+                <span class="dot" onclick="currentSlide(9)"></span>
+                <span class="dot" onclick="currentSlide(10)"></span>
+                <span class="dot" onclick="currentSlide(11)"></span>
+                <span class="dot" onclick="currentSlide(12)"></span>
+                <span class="dot" onclick="currentSlide(13)"></span>
+            </div>
+        
+        </div>
+
+        <div class="p-8 bg-white mb-4 mx-10 p-6">
+            <h2 class="text-3xl text-center font-bold text-gray-800 pb-4  mb-8">
+                <a href="/images/mexico_img/RPNV_Rules-Regs_3-17.pdf" target="_blank">Click for rules and regulations</a>
+            </h2>
+            
+        </div>
+
+    </div> 
+    
+    <footer class="bg-rpv-blue text-white text-center py-4 text-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             &copy; 2025 Resort Property Ventures. All rights reserved.
-        </footer>
-    </div>
+        </div>
+    </footer>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        
+        // Next/previous controls
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+        
+        // Thumbnail image controls
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = slides.length}
+          
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          
+          slides[slideIndex-1].style.display = "block";
+          dots[slideIndex-1].className += " active";
+        }
+    </script>
+
 
 </body>
 </html>
