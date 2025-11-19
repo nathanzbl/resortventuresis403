@@ -175,8 +175,10 @@
     </style>
 </head>
 <body>
+   
+    <%- include('partials/navbar.ejs') %>
 
-    <nav class="fixed top-0 left-0 w-full h-16 bg-white text-rpv-blue flex justify-between items-center px-4 md:px-10 z-50 shadow-md border-b border-gray-100">
+    <!-- <nav class="fixed top-0 left-0 w-full h-16 bg-white text-rpv-blue flex justify-between items-center px-4 md:px-10 z-50 shadow-md border-b border-gray-100">
         <a href="/" class="text-rpv-blue text-xl md:text-2xl font-extrabold tracking-tight">Resort Properties</a>
         
         <div class="flex items-center space-x-2 md:space-x-6">
@@ -212,7 +214,7 @@
             </a>
         </div>
     </nav>
-    
+     -->
     <div class="image-container">
         <img src="/images/hawaii_img/hawaii.jpg" alt="Photo of Hawaii landscape">
         <div class="overlay-text">
@@ -422,11 +424,7 @@
 
     </div> 
     
-    <footer class="bg-rpv-blue text-white text-center py-4 text-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            &copy; 2025 Resort Property Ventures. All rights reserved.
-        </div>
-    </footer>
+    <%- include('partials/footer.ejs') %>
 
     <script>
         let slideIndex = 1;

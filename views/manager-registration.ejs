@@ -9,8 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --primary-color: #0d47a1;
-            --accent-color: #1e88e5;
+            --primary-color: #003262; /* Deep Navy Blue */
+            --accent-color: #FF5A5F;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -20,10 +20,12 @@
             align-items: center;
             min-height: 100vh;
             padding: 1rem;
+            padding-top: 4rem;
         }
         .text-rpv-blue { color: var(--primary-color); }
         .bg-rpv-blue { background-color: var(--primary-color); }
         .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+        .bg-rpv-accent {background-color: #FF5A5F;}
 
         .message-box {
             position: fixed;
@@ -42,6 +44,8 @@
     </style>
 </head>
 <body>
+
+    <%- include('partials/navbar.ejs') %>
 
     <!-- Manager Registration Card -->
     <div class="w-full max-w-md bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-gray-100">
@@ -167,5 +171,6 @@
             }
         }
     </script>
+
 </body>
 </html>

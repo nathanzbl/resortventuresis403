@@ -8,8 +8,8 @@
     <style>
         /* Custom RPV Color Configuration */
         :root {
-            --primary-color: #0d47a1; /* Dark Blue */
-            --accent-color: #1e88e5;  /* Lighter Blue */
+            --primary-color: #003262; /* Deep Navy Blue */
+            --accent-color: #FF5A5F;
         }
         /* Custom utility classes to use RPV colors */
         .text-rpv-blue { color: var(--primary-color); }
@@ -17,124 +17,95 @@
         .border-rpv-accent { border-color: var(--accent-color); }
         .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
         .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
+        .bg-rpv-accent {background-color: #FF5A5F;}
         
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* Slate 50 from Login Page */
         }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: 700px;
+            object-fit: cover;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; /* Make text color readable */
+            z-index: 1;
+            text-align: center;
+         }
+
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 left-0 w-full h-16 bg-rpv-blue text-white flex justify-between items-center px-4 md:px-10 z-50 shadow-lg">
-        <a href="/" class="text-white text-xl md:text-2xl font-bold tracking-tight">Resort Properties</a>
-        
-        <div class="flex items-center space-x-2 md:space-x-4">
-            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150">Home</a>
-
-            <div class="relative group h-full flex items-center">
-                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
-                    Properties
-                </button>
-                <div class="absolute right-0 top-full w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
-                    <a href="/hawaii" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Hawaii</a>
-                    <a href="/mexico" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mexico</a>
-                    <a href="/mammoth" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Mammoth</a>
-                    <a href="/tahoe" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Tahoe</a>
-                </div>
-            </div>
-
-            <div class="relative group">
-                <button class="text-white text-sm md:text-base p-2 rounded-md hover:bg-white hover:text-rpv-blue transition duration-150 focus:outline-none">
-                    Tools
-                </button>
-                <div class="absolute right-0 mt-2 w-48 bg-rpv-blue shadow-lg rounded-md hidden group-hover:block z-50 py-1">
-                    <a href="/schedules" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Schedules</a> 
-                    <a href="/directory" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Directory</a>
-                    <a href="/exchange" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Exchange Form</a>
-                    <a href="/info" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Change Your Info</a>
-                    <a href="/feedback" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Feedback</a> 
-                </div>
-            </div>
-            
-            <a href="/login" class="px-4 py-2 bg-white text-rpv-blue text-sm font-semibold rounded-md shadow-md hover:bg-gray-100 transition duration-150">
-                Login
-            </a>
-        </div>
-    </nav>
+    <%- include('partials/navbar.ejs') %>
 
     
-    <div id="mainPage" class="pt-16">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-4rem)]">
-            
-            <div class="grid grid-rows-2">
-                
-                <div class="bg-gray-100 p-8 md:p-16 flex flex-col justify-center">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-rpv-blue leading-tight tracking-tight">
-                        Resort Properties
-                    </h1>
-                    <p class="text-xl text-gray-700 mb-6">Ventures</p>
-                    <hr class="w-2/3 border-t border-gray-300 mb-8">
-                    
-                    <a href="/login" class="w-fit px-8 py-3 bg-rpv-blue text-white font-semibold rounded-lg shadow-lg hover:bg-rpv-accent focus:outline-none focus:ring-4 focus:ring-rpv-accent focus:ring-opacity-50 transition duration-200">
-                        Shareholder Login
-                    </a>
-                </div>
-                
-                <div class="bg-rpv-blue p-8 md:p-16 text-white flex flex-col justify-center">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-6 leading-snug">Welcome Shareholders</h2>
-                    <p class="text-lg leading-relaxed max-w-xl">
-                        Welcome to the web site for Resort Property Ventures shareholders. The goal of the site is to provide pertinent information and serve as a forum for shareholders and management to communicate.
-                    </p>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 grid-rows-2">
-                <div class="bg-cover bg-center min-h-[300px] sm:min-h-[400px] lg:min-h-0" 
-                     style="background-image: url('https://picsum.photos/900/450?random=1');" 
-                     aria-label="Placeholder image of a resort property">
-                </div>
-                <div class="bg-cover bg-center min-h-[300px] sm:min-h-[400px] lg:min-h-0" 
-                     style="background-image: url('https://picsum.photos/900/450?random=2');" 
-                     aria-label="Placeholder image of a resort view">
-                </div>
+    <div id="mainPage" class="pt-16">
+        <div class="image-container">
+            <img src="/landing_img/plane2.jpg" alt="Photo of View From Airplane Window">
+            <div class="overlay-text">
+                <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight">
+                    Resort Properties Ventures
+                </h1>
+                <p class="text-2xl mt-2">Your next vacation awaits!</p>
             </div>
         </div>
+                    
+        <div class="bg-white p-20 text-center text-black flex flex-col justify-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">Welcome Shareholders</h2>
+            <p class="text-lg" style="max-width: 750px; margin: 0 auto">
+                Welcome to the web site for Resort Property Ventures shareholders. The goal of the site is to provide pertinent information and serve as a forum for shareholders and management to communicate.
+            </p>
+        </div>
+        
 
-        <div class="bg-white py-12 px-4 md:px-10 text-gray-800">
-            <h3 class="text-3xl font-bold text-rpv-blue mb-8 border-b-2 border-rpv-accent pb-2 w-fit">Key Site Features</h3>
+        <div class="text-center bg-gray-100 py-12 px-4 md:px-10 text-gray-800">
+            <h3 class="text-3xl font-bold text-rpv-blue mb-8  pb-2 w-fit mx-auto">Key Site Features</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-rpv-accent hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Shareholder Communication</h4>
-                    <p class="text-gray-600">Connect with other partners directly from the <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Directory</a>. You can email individuals or groups segmented by property.</p>
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Shareholder Directory</h4>
+                    
                 </div>
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-rpv-accent hover:shadow-xl transition duration-200">
                     <h4 class="text-xl font-semibold text-rpv-blue mb-3">List/Exchange Property</h4>
-                    <p class="text-gray-600">Easily list your weeks for rent, trade, or sale by submitting the <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Exchange Form</a>. Listings appear in the <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Schedules</a> view.</p>
+                    
                 </div>
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-rpv-accent hover:shadow-xl transition duration-200">
                     <h4 class="text-xl font-semibold text-rpv-blue mb-3">Management Directory</h4>
-                    <p class="text-gray-600">Find contact information for all board members and key management staff instantly on the <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Directory</a> page.</p>
+                    
                 </div>
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-rpv-accent hover:shadow-xl transition duration-200">
                     <h4 class="text-xl font-semibold text-rpv-blue mb-3">Access Schedules</h4>
-                    <p class="text-gray-600">View upcoming shareholder meetings, property schedules, and download printer-friendly versions of the latest <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Schedules</a>.</p>
+                    
                 </div>
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-rpv-accent hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Property Management Contact</h4>
-                    <p class="text-gray-600">If you have specific concerns or comments regarding an individual property, please contact your dedicated property manager via the <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Directory</a>.</p>
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Provide Feedback</h4>
+                    
                 </div>
-                
+
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-rpv-accent hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Provide Organizational Feedback</h4>
-                    <p class="text-gray-600">We welcome suggestions for both the organization and the website. Submit your valuable input through the <a href="#" class="text-rpv-blue hover:text-rpv-accent font-medium underline">Feedback Form</a>.</p>
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Change Your Information</h4>
+                    
                 </div>
                 
             </div>
