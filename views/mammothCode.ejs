@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Properties Ventures - Mammoth Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom RPV Color Configuration (Professional & Clean) */
+        :root {
+            --primary-color: #003262; /* Deep Navy Blue */
+            --accent-color: #FF5A5F;  /* Coral/Red Accent */
+            --light-bg: #f8f9fa;      /* Very Light Gray for Section background */
+        }
+        /* Custom utility classes to use RPV colors */
+        .text-rpv-blue { color: var(--primary-color); }
+        .bg-rpv-blue { background-color: var(--primary-color); }
+        .bg-rpv-accent { background-color: var(--accent-color); }
+        .border-rpv-accent { border-color: var(--accent-color); }
+        .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+        .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg); 
+            padding-top: 4rem;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <%- include('partials/navbar.ejs') %>
+    
+    <main class="container mx-auto px-4 py-12">
+        
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-rpv-blue tracking-tight mb-2">
+                Mammoth Access Codes
+            </h1>
+            <p class="text-lg text-gray-500 font-medium">
+                Important access codes and property details for your stay.
+            </p>
+        </header>
+
+        <section class="max-w-3xl mx-auto bg-white p-8 md:p-10 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-rpv-blue pb-4 mb-6 border-b border-gray-200">
+                Security Codes
+            </h2>
+
+            <div class="space-y-4 text-gray-700">
+                
+                <p>
+                    <strong>Parking Garage Keypad Code:</strong> 
+                    <span class="text-base text-gray-600">#2513 (Be sure to enter # first)</span>
+                </p>
+
+                <p>
+                    <strong>Garage Pedestrian Doors / Common Area Doors (Canyon and Minaret):</strong> 
+                    <span class="text-base text-gray-600">2513 (No # required)</span>
+                </p>
+
+                <p>
+                    <strong>Security Locks on Outside Doors for All Buildings:</strong> 
+                    <span class="text-base text-gray-600">3152</span>
+                </p>
+
+                <p>
+                    <strong>Locks on Doors to the Condo Unit:</strong> 
+                    <span class="text-base text-gray-600">5417</span>
+                </p>
+
+                <p class="pt-2">
+                    Recreation Building: A pool, jacuzzi, sauna, game room, and laundry are located in the recreation building. The access code for entry is <span class="font-bold text-rpv-accent">3152</span>.
+                </p>
+
+                <hr class="border-gray-200 my-6">
+
+                <div class="space-y-3">
+                    <h3 class="text-xl font-bold text-rpv-blue">Ski Locker Information</h3>
+                    <p>Our unit has assigned lockers on the first floor to store your skis and equipment.</p>
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8">
+                        <div>
+                            <p class="font-semibold text-gray-600">Locker Numbers:</p>
+                            <p class="text-xl font-mono text-rpv-blue">#5 and #20</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-600">Combination:</p>
+                            <p class="text-xl font-mono text-rpv-blue">12-24-35</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-8 pt-4 border-t border-gray-100 text-center text-sm text-gray-500 italic">
+                Please keep these codes confidential during your stay.
+            </p>
+
+            <div class="mt-6 mx-2 text-center">
+                <a href="/mammoth"
+                   class="px-4 py-2 bg-rpv-accent text-white text-sm font-bold rounded-lg shadow-md hover:opacity-90 transition duration-150 inline-block">
+                    Back
+                </a>
+            </div>
+
+        </section>
+
+        
+        
+    </main>
+
+
+    <%- include('partials/footer.ejs') %>
+
+
+</body>
+</html>

@@ -339,6 +339,10 @@ app.get('/directory', isAuthenticated, async (req, res) => {
     }
 });
 
+app.get('/code', isAuthenticated, async (req, res) => {
+    res.render('mammothCode', { user: req.session.user });
+});
+
 // Property schedules page
 app.get('/schedules', isAuthenticated, async (req, res) => {
     const selectedProperty = req.query.property_name || '';
