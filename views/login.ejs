@@ -14,8 +14,8 @@
     <style>
         /* Custom styles and configuration */
         :root {
-            --primary-color: #0d47a1; /* Dark Blue */
-            --accent-color: #1e88e5;  /* Lighter Blue */
+            --primary-color: #003262; /* Deep Navy Blue */
+            --accent-color: #FF5A5F;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -25,10 +25,12 @@
             align-items: center;
             min-height: 100vh;
             padding: 1rem;
+            padding-top: 4rem;
         }
         .text-rpv-blue { color: var(--primary-color); }
         .bg-rpv-blue { background-color: var(--primary-color); }
         .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+        .bg-rpv-accent {background-color: #FF5A5F;}
 
         /* Custom message box styling (replaces alert/confirm) */
         .message-box {
@@ -46,6 +48,8 @@
     </style>
 </head>
 <body>
+
+    <%- include('partials/navbar.ejs') %>
 
     <!-- Main Login Card -->
     <div id="login-card" class="w-full max-w-md bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-gray-100 transition duration-300 hover:shadow-3xl">
