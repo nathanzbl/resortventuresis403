@@ -310,6 +310,92 @@ app.get('/dashboard', isAuthenticated, (req, res) => {
     res.render('dashboard', { user: req.session.user });
 });
 
+
+
+app.get('/directory', isAuthenticated, async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT
+                owner_id,
+                primaryownerfirstname  AS "PrimaryOwnerFirstName",
+                primaryownerlastname   AS "PrimaryOwnerLastName",
+                secondaryownerfirstname AS "SecondaryOwnerFirstName",
+                secondaryownerlastname  AS "SecondaryOwnerLastName",
+                contact_info,
+                email,
+                notes
+            FROM owners1
+            ORDER BY owner_id
+        `);
+
+        // Renders views/owners.ejs
+        res.render('directory', {
+            owners: result.rows,
+            user: req.session.user || null
+        });
+    } catch (err) {
+        console.error('Error fetching owners:', err);
+        res.status(500).send('Error fetching owners');
+    }
+});
+
+// Property schedules page
+app.get('/schedules', isAuthenticated, async (req, res) => {
+    const selectedProperty = req.query.property_name || '';
+
+    try {
+        // Get list of properties for the dropdown
+        const propertiesResult = await pool.query(
+            'SELECT property_id, property_name FROM properties ORDER BY property_name'
+        );
+        const properties = propertiesResult.rows;
+
+        let schedules = [];
+
+        // If a property was selected, load its schedule
+        if (selectedProperty) {
+            const scheduleResult = await pool.query(
+                `SELECT
+    s.start_date,
+    s.end_date,
+    CASE 
+        WHEN (o.secondaryownerfirstname IS NOT NULL AND o.secondaryownerfirstname <> '')
+          OR (o.secondaryownerlastname  IS NOT NULL AND o.secondaryownerlastname  <> '')
+        THEN CONCAT(
+            COALESCE(o.primaryownerfirstname, ''), ' ',
+            COALESCE(o.primaryownerlastname,  ''), ' and ',
+            COALESCE(o.secondaryownerfirstname, ''), ' ',
+            COALESCE(o.secondaryownerlastname,  '')
+        )
+        ELSE CONCAT(
+            COALESCE(o.primaryownerfirstname, ''), ' ',
+            COALESCE(o.primaryownerlastname,  '')
+        )
+    END AS owner_name,
+    s.status
+FROM schedule s
+INNER JOIN properties p ON p.property_id = s.property_id
+INNER JOIN owners1 o     ON o.owner_id   = s.ownerid
+WHERE p.property_name = $1
+ORDER BY s.start_date`,
+                [selectedProperty]
+            );
+            schedules = scheduleResult.rows;
+        }
+
+        res.render('schedules', {
+            user: req.session.user || null,
+            properties,
+            selectedProperty,
+            schedules
+        });
+    } catch (err) {
+        console.error('Error loading schedules:', err);
+        res.status(500).send('Error loading schedules');
+    }
+});
+
+
 // --- Server Start ---
 app.listen(PORT, () => {
     console.log(`\n🚀 Server is running at http://localhost:${PORT}`);

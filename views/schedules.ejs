@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Property Schedules</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom RPV Color Configuration */
+        :root {
+            --primary-color: #0d47a1; /* Dark Blue */
+            --accent-color: #1e88e5;  /* Lighter Blue */
+        }
+        /* Custom utility classes to use RPV colors */
+        .text-rpv-blue { color: var(--primary-color); }
+        .bg-rpv-blue { background-color: var(--primary-color); }
+        .border-rpv-accent { border-color: var(--accent-color); }
+        .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
+        .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 from Login Page */
+        }
+    </style>
+</head>
+
+    <nav class="fixed top-0 left-0 w-full h-16 bg-white text-rpv-blue flex justify-between items-center px-4 md:px-10 z-50 shadow-md border-b border-gray-100">
+        <a href="/" class="text-rpv-blue text-xl md:text-2xl font-extrabold tracking-tight">Resort Properties</a>
+        
+        <div class="flex items-center space-x-2 md:space-x-6">
+            <a href="/" class="hidden sm:inline-block text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 font-semibold">Home</a>
+
+            <div class="relative group h-full flex items-center">
+                <button class="text-rpv-blue text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 focus:outline-none font-semibold">
+                    Properties
+                </button>
+                <div class="absolute right-0 top-full w-48 bg-white shadow-xl rounded-md hidden group-hover:block z-50 py-1 border border-gray-100">
+                    <a href="/hawaii" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Hawaii</a>
+                    <a href="/mexico" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Mexico</a>
+                    <a href="/mammoth" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Mammoth</a>
+                    <a href="/tahoe" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Tahoe</a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button class="text-rpv-blue text-sm md:text-base p-2 rounded-md hover:text-rpv-blue transition duration-150 focus:outline-none font-semibold">
+                    Tools
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-md hidden group-hover:block z-50 py-1 border border-gray-100">
+                    <a href="/schedules" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Schedules</a> 
+                    <a href="/directory" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Directory</a>
+                    <a href="/exchange" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Exchange Form</a>
+                    <a href="/info" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Change Your Info</a>
+                    <a href="/feedback" class="block px-4 py-2 text-sm text-rpv-blue hover:bg-gray-100 font-medium">Feedback</a> 
+                </div>
+            </div>
+            
+            <a href="/login" class="px-4 py-2 bg-rpv-accent text-white text-sm font-bold rounded-lg shadow-md hover:opacity-90 transition duration-150">
+                Login
+            </a>
+        </div>
+    </nav>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-5xl mx-auto p-6">
+        <header class="mb-6">
+            <h1 class="text-3xl font-extrabold text-gray-800">Property Schedules</h1>
+            <p class="mt-1 text-sm text-gray-600">Select a property to view its schedule</p>
+        </header>
+
+        <section class="mb-6">
+            <form method="GET" action="/schedules" class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <label for="property_name" class="sr-only">Select property</label>
+                <div class="flex-1">
+                    <select id="property_name" name="property_name" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <option value="">-- Select a property --</option>
+                        <% properties.forEach(function(p) { %>
+                            <option value="<%= p.property_name %>"
+                                <%= p.property_name === selectedProperty ? 'selected' : '' %>>
+                                <%= p.property_name %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+
+                <div>
+                    <button type="submit"
+                                    class="w-full sm:w-auto inline-flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        Generate Property Schedule
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <% if (schedules && schedules.length > 0) { %>
+            <section class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-800">Schedule for <span class="text-blue-600"><%= selectedProperty %></span></h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-100">
+                            <% schedules.forEach(function(row) { %>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.start_date.toISOString().slice(0,10) %></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.end_date.toISOString().slice(0,10) %></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.owner_name %></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.status || '' %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        <% } else if (selectedProperty) { %>
+            <div class="mt-6">
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                    <p class="text-sm text-yellow-800">No schedule rows found for <span class="font-medium"><%= selectedProperty %></span>.</p>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
