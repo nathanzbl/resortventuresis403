@@ -9,19 +9,23 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { Pool } = require('pg');
+const dotenv = require('dotenv');
 
+
+// Load environment variables from .env file
+dotenv.config();
 // 2. Initialize the Express application
 const app = express();
-const PORT = 3000;
+const PORT = process.env.NODE_PORT || 3000;
 
 // --- Database Configuration ---
 // index.js MUST be updated to connect to the AWS RDS endpoint
 const pool = new Pool({
-    user: 'postgres',           
-    host: 'database-1.cuxceiacqgo6.us-east-1.rds.amazonaws.com', 
-    database: 'postgres', 
-    password: 'adminpassword12345',
-    port: 5432,
+    user: process.env.DB_USER,           
+    host: process.env.DB_HOST, 
+    database: process.env.DB_DATABASE, 
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
     ssl: {
         rejectUnauthorized: false  // AWS RDS requires SSL
     }
@@ -355,29 +359,25 @@ app.get('/schedules', isAuthenticated, async (req, res) => {
         // If a property was selected, load its schedule
         if (selectedProperty) {
             const scheduleResult = await pool.query(
-                `SELECT
-    s.start_date,
-    s.end_date,
-    CASE 
-        WHEN (o.secondaryownerfirstname IS NOT NULL AND o.secondaryownerfirstname <> '')
-          OR (o.secondaryownerlastname  IS NOT NULL AND o.secondaryownerlastname  <> '')
-        THEN CONCAT(
-            COALESCE(o.primaryownerfirstname, ''), ' ',
-            COALESCE(o.primaryownerlastname,  ''), ' and ',
-            COALESCE(o.secondaryownerfirstname, ''), ' ',
-            COALESCE(o.secondaryownerlastname,  '')
-        )
-        ELSE CONCAT(
-            COALESCE(o.primaryownerfirstname, ''), ' ',
-            COALESCE(o.primaryownerlastname,  '')
-        )
-    END AS owner_name,
-    s.status
-FROM schedule s
-INNER JOIN properties p ON p.property_id = s.property_id
-INNER JOIN owners1 o     ON o.owner_id   = s.ownerid
-WHERE p.property_name = $1
-ORDER BY s.start_date`,
+                `SELECT s.start_date, s.end_date,
+                 CASE 
+                    WHEN (o.secondaryownerfirstname IS NOT NULL AND o.secondaryownerfirstname <> '')
+                    OR (o.secondaryownerlastname  IS NOT NULL AND o.secondaryownerlastname  <> '')
+                    THEN CONCAT(
+                    COALESCE(o.primaryownerfirstname, ''), ' ',
+                    COALESCE(o.primaryownerlastname,  ''), ' and ',
+                    COALESCE(o.secondaryownerfirstname, ''), ' ',
+                    COALESCE(o.secondaryownerlastname,  ''))
+                ELSE CONCAT(
+                    COALESCE(o.primaryownerfirstname, ''), ' ',
+                    COALESCE(o.primaryownerlastname,  ''))
+                END AS owner_name,
+                s.status
+                FROM schedule s
+                INNER JOIN properties p ON p.property_id = s.property_id
+                INNER JOIN owners1 o     ON o.owner_id   = s.ownerid
+                WHERE p.property_name = $1
+                ORDER BY s.start_date`,
                 [selectedProperty]
             );
             schedules = scheduleResult.rows;
