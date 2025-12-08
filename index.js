@@ -314,7 +314,8 @@ app.get('/dashboard', isAuthenticated, (req, res) => {
 
 app.get('/directory', isAuthenticated, async (req, res) => {
     try {
-        const result = await pool.query(`
+        const searchQuery = req.query.search; // Get the search term from the URL query
+        let sqlQuery = `
             SELECT
                 owner_id,
                 primaryownerfirstname  AS "PrimaryOwnerFirstName",
@@ -325,12 +326,29 @@ app.get('/directory', isAuthenticated, async (req, res) => {
                 email,
                 notes
             FROM owners1
-            ORDER BY owner_id
-        `);
+        `;
+        const queryParams = [];
 
-        // Renders views/owners.ejs
+        if (searchQuery) {
+            const searchTerm = '%' + searchQuery.toLowerCase() + '%';
+
+            sqlQuery += `
+                WHERE 
+                    primaryownerfirstname ILIKE $1 OR
+                    primaryownerlastname ILIKE $1 OR
+                    secondaryownerfirstname ILIKE $1 OR
+                    secondaryownerlastname ILIKE $1
+            `;
+            queryParams.push(searchTerm);
+        }
+
+        sqlQuery += ` ORDER BY owner_id`;
+
+        const result = await pool.query(sqlQuery, queryParams);
+
         res.render('directory', {
             owners: result.rows,
+            searchQuery: searchQuery || '', 
             user: req.session.user || null
         });
     } catch (err) {
