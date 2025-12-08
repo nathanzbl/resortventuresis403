@@ -18,11 +18,19 @@
         .hover\:bg-rpv-accent:hover { background-color: var(--accent-color); }
         .focus\:ring-rpv-accent:focus { --tw-ring-color: var(--accent-color); }
         .bg-rpv-accent {background-color: var(--accent-color);}
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* Slate 50 from Login Page */
             padding-top: 4rem;
+        }
+
+        /* Line clamp utility */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -31,32 +39,78 @@
 
 <body class="bg-gray-50 text-gray-800">
     <div class="max-w-7xl mx-auto p-6">
-        <h1 class="text-2xl font-semibold mb-4">Owners</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-semibold">Owners</h1>
+            <% if (user && user.role === 'manager') { %>
+                <button onclick="openAddModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-sm">
+                    Add Owner
+                </button>
+            <% } %>
+        </div>
 
         <div class="bg-white shadow rounded-lg overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="w-full divide-y divide-gray-200 text-xs">
                     <thead class="bg-gray-100">
                         <tr class="text-left">
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Primary First</th>
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Primary Last</th>
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Secondary First</th>
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Secondary Last</th>
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Contact Info</th>
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Email</th>
-                            <th class="sticky top-0 z-10 px-4 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Notes</th>
+                            <th class="px-2 py-2 font-medium text-gray-600 uppercase">Primary Owner</th>
+                            <th class="px-2 py-2 font-medium text-gray-600 uppercase">Secondary Owner</th>
+                            <th class="px-2 py-2 font-medium text-gray-600 uppercase">Contact</th>
+                            <th class="px-2 py-2 font-medium text-gray-600 uppercase">Email</th>
+                            <th class="px-2 py-2 font-medium text-gray-600 uppercase">Notes</th>
+                            <% if (user && user.role === 'manager') { %>
+                                <th class="px-2 py-2 font-medium text-gray-600 uppercase">Actions</th>
+                            <% } %>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-100">
                         <% owners.forEach(function(owner) { %>
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm text-gray-700"><%= owner.PrimaryOwnerFirstName %></td>
-                                <td class="px-4 py-3 text-sm text-gray-700"><%= owner.PrimaryOwnerLastName %></td>
-                                <td class="px-4 py-3 text-sm text-gray-700"><%= owner.SecondaryOwnerFirstName %></td>
-                                <td class="px-4 py-3 text-sm text-gray-700"><%= owner.SecondaryOwnerLastName %></td>
-                                <td class="px-4 py-3 text-sm text-gray-700 break-words"><%= owner.contact_info %></td>
-                                <td class="px-4 py-3 text-sm text-blue-600"><a href="mailto:<%= owner.email %>" class="hover:underline"><%= owner.email %></a></td>
-                                <td class="px-4 py-3 text-sm text-gray-600 break-words"><%= owner.notes %></td>
+                                <td class="px-2 py-2 text-gray-700">
+                                    <div class="max-w-[120px]">
+                                        <%= owner.PrimaryOwnerFirstName %> <%= owner.PrimaryOwnerLastName %>
+                                    </div>
+                                </td>
+                                <td class="px-2 py-2 text-gray-700">
+                                    <div class="max-w-[120px]">
+                                        <% if (owner.SecondaryOwnerFirstName || owner.SecondaryOwnerLastName) { %>
+                                            <%= owner.SecondaryOwnerFirstName %> <%= owner.SecondaryOwnerLastName %>
+                                        <% } else { %>
+                                            <span class="text-gray-400">-</span>
+                                        <% } %>
+                                    </div>
+                                </td>
+                                <td class="px-2 py-2 text-gray-700">
+                                    <div class="max-w-[100px] break-words">
+                                        <%= owner.contact_info || '-' %>
+                                    </div>
+                                </td>
+                                <td class="px-2 py-2">
+                                    <div class="max-w-[150px] break-all">
+                                        <a href="mailto:<%= owner.email %>" class="text-blue-600 hover:underline">
+                                            <%= owner.email || '-' %>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="px-2 py-2 text-gray-600">
+                                    <div class="max-w-[150px] break-words line-clamp-2" title="<%= owner.notes %>">
+                                        <%= owner.notes || '-' %>
+                                    </div>
+                                </td>
+                                <% if (user && user.role === 'manager') { %>
+                                    <td class="px-2 py-2">
+                                        <div class="flex flex-col gap-1 min-w-[60px]">
+                                            <button onclick='openEditModal(<%= JSON.stringify(owner) %>)'
+                                                class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium transition-colors duration-150 shadow-sm">
+                                                Edit
+                                            </button>
+                                            <button onclick="deleteOwner(<%= owner.owner_id %>)"
+                                                class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-medium transition-colors duration-150 shadow-sm">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                <% } %>
                             </tr>
                         <% }) %>
                     </tbody>
@@ -64,6 +118,188 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Owner Modal -->
+    <div id="addModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
+            <h2 class="text-xl font-semibold mb-4">Add New Owner</h2>
+            <form id="addOwnerForm" class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Primary First Name</label>
+                    <input type="text" name="primaryFirstName" required class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Primary Last Name</label>
+                    <input type="text" name="primaryLastName" required class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Secondary First Name</label>
+                    <input type="text" name="secondaryFirstName" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Secondary Last Name</label>
+                    <input type="text" name="secondaryLastName" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact Info</label>
+                    <input type="text" name="contactInfo" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                    <textarea name="notes" rows="3" class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+                </div>
+                <div class="col-span-2 flex justify-end gap-3">
+                    <button type="button" onclick="closeAddModal()" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Cancel</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Add Owner</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Owner Modal -->
+    <div id="editModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
+            <h2 class="text-xl font-semibold mb-4">Edit Owner</h2>
+            <form id="editOwnerForm" class="grid grid-cols-2 gap-4">
+                <input type="hidden" name="ownerId" id="editOwnerId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Primary First Name</label>
+                    <input type="text" name="primaryFirstName" id="editPrimaryFirst" required class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Primary Last Name</label>
+                    <input type="text" name="primaryLastName" id="editPrimaryLast" required class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Secondary First Name</label>
+                    <input type="text" name="secondaryFirstName" id="editSecondaryFirst" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Secondary Last Name</label>
+                    <input type="text" name="secondaryLastName" id="editSecondaryLast" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact Info</label>
+                    <input type="text" name="contactInfo" id="editContactInfo" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" id="editEmail" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                    <textarea name="notes" id="editNotes" rows="3" class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+                </div>
+                <div class="col-span-2 flex justify-end gap-3">
+                    <button type="button" onclick="closeEditModal()" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Cancel</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Update Owner</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAddModal() {
+            document.getElementById('addModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').classList.add('hidden');
+            document.getElementById('addOwnerForm').reset();
+        }
+
+        function openEditModal(owner) {
+            document.getElementById('editOwnerId').value = owner.owner_id;
+            document.getElementById('editPrimaryFirst').value = owner.PrimaryOwnerFirstName || '';
+            document.getElementById('editPrimaryLast').value = owner.PrimaryOwnerLastName || '';
+            document.getElementById('editSecondaryFirst').value = owner.SecondaryOwnerFirstName || '';
+            document.getElementById('editSecondaryLast').value = owner.SecondaryOwnerLastName || '';
+            document.getElementById('editContactInfo').value = owner.contact_info || '';
+            document.getElementById('editEmail').value = owner.email || '';
+            document.getElementById('editNotes').value = owner.notes || '';
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+            document.getElementById('editOwnerForm').reset();
+        }
+
+        document.getElementById('addOwnerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('/directory/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                alert('Error adding owner');
+            }
+        });
+
+        document.getElementById('editOwnerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            const ownerId = data.ownerId;
+            delete data.ownerId;
+
+            try {
+                const response = await fetch(`/directory/edit/${ownerId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                alert('Error updating owner');
+            }
+        });
+
+        async function deleteOwner(ownerId) {
+            if (!confirm('Are you sure you want to delete this owner?')) return;
+
+            try {
+                const response = await fetch(`/directory/delete/${ownerId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                alert('Error deleting owner');
+            }
+        }
+    </script>
 
     <%- include('partials/footer.ejs') %>
 

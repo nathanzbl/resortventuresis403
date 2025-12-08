@@ -4,7 +4,8 @@
   "description": "Nathan, Luke, Rachel, Bryon optimizing nathans dad's website",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

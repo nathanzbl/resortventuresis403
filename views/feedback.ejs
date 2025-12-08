@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Feedback - RPV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #003262;
+            --accent-color: #FF5A5F;
+        }
+        .text-rpv-blue { color: var(--primary-color); }
+        .bg-rpv-blue { background-color: var(--primary-color); }
+        .bg-rpv-accent { background-color: var(--accent-color); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            padding-top: 4rem;
+        }
+    </style>
+</head>
+
+<%- include('partials/navbar.ejs') %>
+
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-3xl mx-auto p-6">
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Share Your Feedback</h1>
+            <p class="text-gray-600 mb-6">We value your input! Please let us know about your experience with our properties and services.</p>
+
+            <form id="feedbackForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Name *</label>
+                        <input type="text" name="name" required
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Email *</label>
+                        <input type="email" name="email" required
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Property Visited *</label>
+                        <select name="property" required
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="">-- Select Property --</option>
+                            <option value="Hawaii">Hawaii</option>
+                            <option value="Mexico">Mexico</option>
+                            <option value="Mammoth">Mammoth</option>
+                            <option value="Tahoe">Tahoe</option>
+                            <option value="General">General Feedback</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Overall Rating *</label>
+                        <select name="rating" required
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="">-- Select Rating --</option>
+                            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ Very Good</option>
+                            <option value="3">⭐⭐⭐ Good</option>
+                            <option value="2">⭐⭐ Fair</option>
+                            <option value="1">⭐ Poor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Visit Date</label>
+                    <input type="date" name="visitDate"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Feedback Type *</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Property Condition"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Property Condition</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Cleanliness"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Cleanliness</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Amenities"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Amenities</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Location"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Location</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Customer Service"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Customer Service</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Booking Process"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Booking Process</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Value"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Value</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="feedbackType" value="Other"
+                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                            <span class="text-sm">Other</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tell us about your experience *</label>
+                    <textarea name="comments" rows="6" required
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Please share your thoughts, suggestions, or concerns..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">What did you like most?</label>
+                    <textarea name="positives" rows="3"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="What made your experience great?"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">What could we improve?</label>
+                    <textarea name="improvements" rows="3"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="How can we make your next visit better?"></textarea>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="followUp" value="yes" id="followUp"
+                        class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+                    <label for="followUp" class="text-sm text-gray-700">I would like someone to follow up with me about this feedback</label>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="window.history.back()"
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-md font-medium transition-colors duration-150">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors duration-150 shadow-sm">
+                        Submit Feedback
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            // Handle multiple checkbox values
+            const feedbackTypes = [];
+            formData.getAll('feedbackType').forEach(type => feedbackTypes.push(type));
+
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                property: formData.get('property'),
+                rating: formData.get('rating'),
+                visitDate: formData.get('visitDate'),
+                feedbackTypes: feedbackTypes,
+                comments: formData.get('comments'),
+                positives: formData.get('positives'),
+                improvements: formData.get('improvements'),
+                followUp: formData.get('followUp') === 'yes'
+            };
+
+            try {
+                const response = await fetch('/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    e.target.reset();
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                alert('Error submitting feedback');
+            }
+        });
+    </script>
+
+    <%- include('partials/footer.ejs') %>
+
+</body>
+</html>
