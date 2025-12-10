@@ -72,46 +72,74 @@
             <p class="text-lg" style="max-width: 750px; margin: 0 auto">
                 Welcome to the web site for Resort Property Ventures shareholders. The goal of the site is to provide pertinent information and serve as a forum for shareholders and management to communicate.
             </p>
-        </div>
-        
 
+            <% if (!user) { %>
+                <div class="mt-8">
+                    <p class="text-gray-600 mb-4">Please log in to access all features</p>
+                    <a href="/login" class="inline-block bg-rpv-accent text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition duration-150 shadow-md">
+                        Login to Continue
+                    </a>
+                </div>
+            <% } %>
+        </div>
+
+        <% if (user) { %>
         <div class="text-center bg-gray-100 py-12 px-4 md:px-10 text-gray-800">
             <h3 class="text-3xl font-bold text-rpv-blue mb-8  pb-2 w-fit mx-auto">Key Site Features</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Shareholder Directory</h4>
-                    
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">List/Exchange Property</h4>
-                    
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Management Directory</h4>
-                    
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Access Schedules</h4>
-                    
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Provide Feedback</h4>
-                    
-                </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <a href="/directory" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200 cursor-pointer block">
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Shareholder Directory</h4>
+                    <p class="text-gray-600 text-sm">View contact information for all property owners</p>
+                    <div class="mt-4">
+                        <span class="text-rpv-accent font-medium">View Directory →</span>
+                    </div>
+                </a>
+
+                <a href="/exchange" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200 cursor-pointer block">
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">List/Exchange Property</h4>
+                    <p class="text-gray-600 text-sm">Submit requests to exchange your property reservations</p>
+                    <div class="mt-4">
+                        <span class="text-rpv-accent font-medium">Exchange Property →</span>
+                    </div>
+                </a>
+
+                <a href="/directory" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200 cursor-pointer block">
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Management Directory</h4>
+                    <p class="text-gray-600 text-sm">Access management and owner contact information</p>
+                    <div class="mt-4">
+                        <span class="text-rpv-accent font-medium">View Directory →</span>
+                    </div>
+                </a>
+
+                <a href="/schedules" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200 cursor-pointer block">
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Access Schedules</h4>
+                    <p class="text-gray-600 text-sm">View and manage property reservation schedules</p>
+                    <div class="mt-4">
+                        <span class="text-rpv-accent font-medium">View Schedules →</span>
+                    </div>
+                </a>
+
+                <a href="/feedback" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200 cursor-pointer block">
+                    <h4 class="text-xl font-semibold text-rpv-blue mb-3">Provide Feedback</h4>
+                    <p class="text-gray-600 text-sm">Share your experience and suggestions with us</p>
+                    <div class="mt-4">
+                        <span class="text-rpv-accent font-medium">Give Feedback →</span>
+                    </div>
+                </a>
+
+                <a href="/info" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-200 cursor-pointer block">
                     <h4 class="text-xl font-semibold text-rpv-blue mb-3">Change Your Information</h4>
-                    
-                </div>
-                
+                    <p class="text-gray-600 text-sm">Update your contact details and preferences</p>
+                    <div class="mt-4">
+                        <span class="text-rpv-accent font-medium">Update Info →</span>
+                    </div>
+                </a>
+
             </div>
         </div>
+        <% } %>
 
         <footer class="bg-gray-800 text-white text-center py-4 text-sm mt-0">
             &copy; 2025 Resort Property Ventures. All rights reserved.
