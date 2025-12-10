@@ -378,25 +378,40 @@ app.post('/directory/add', isAuthenticated, isManager, async (req, res) => {
     } = req.body;
 
     try {
-        await pool.query(
+        // Get the next owner_id
+        const maxIdResult = await pool.query('SELECT COALESCE(MAX(owner_id), 0) + 1 as next_id FROM owners1');
+        const nextOwnerId = maxIdResult.rows[0].next_id;
+
+        // Convert empty strings to null for optional fields
+        const result = await pool.query(
             `INSERT INTO owners1
-            (primaryownerfirstname, primaryownerlastname, secondaryownerfirstname,
+            (owner_id, primaryownerfirstname, primaryownerlastname, secondaryownerfirstname,
              secondaryownerlastname, contact_info, email, notes)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-            [primaryFirstName, primaryLastName, secondaryFirstName,
-             secondaryLastName, contactInfo, email, notes]
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING owner_id`,
+            [
+                nextOwnerId,
+                primaryFirstName || null,
+                primaryLastName || null,
+                secondaryFirstName || null,
+                secondaryLastName || null,
+                contactInfo || null,
+                email || null,
+                notes || null
+            ]
         );
 
-        console.log(`✅ New owner added by manager: ${req.session.user.username}`);
+        console.log(`✅ New owner added by manager: ${req.session.user.username} (ID: ${result.rows[0].owner_id})`);
         return res.status(200).json({
             success: true,
             message: 'Owner added successfully!'
         });
     } catch (err) {
         console.error('Error adding owner:', err);
+        console.error('Error details:', err.message);
         return res.status(500).json({
             success: false,
-            message: 'Error adding owner'
+            message: 'Error adding owner: ' + err.message
         });
     }
 });
@@ -415,14 +430,23 @@ app.post('/directory/edit/:id', isAuthenticated, isManager, async (req, res) => 
     } = req.body;
 
     try {
+        // Convert empty strings to null for optional fields
         await pool.query(
             `UPDATE owners1
             SET primaryownerfirstname = $1, primaryownerlastname = $2,
                 secondaryownerfirstname = $3, secondaryownerlastname = $4,
                 contact_info = $5, email = $6, notes = $7
             WHERE owner_id = $8`,
-            [primaryFirstName, primaryLastName, secondaryFirstName,
-             secondaryLastName, contactInfo, email, notes, ownerId]
+            [
+                primaryFirstName || null,
+                primaryLastName || null,
+                secondaryFirstName || null,
+                secondaryLastName || null,
+                contactInfo || null,
+                email || null,
+                notes || null,
+                ownerId
+            ]
         );
 
         console.log(`✅ Owner ${ownerId} updated by manager: ${req.session.user.username}`);
@@ -432,9 +456,10 @@ app.post('/directory/edit/:id', isAuthenticated, isManager, async (req, res) => 
         });
     } catch (err) {
         console.error('Error updating owner:', err);
+        console.error('Error details:', err.message);
         return res.status(500).json({
             success: false,
-            message: 'Error updating owner'
+            message: 'Error updating owner: ' + err.message
         });
     }
 });
